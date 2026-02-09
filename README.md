@@ -1,302 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geonation Store</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geonation Minecraft Server</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: linear-gradient(135deg, #0b3d0b, #000);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; }
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+    .logo {
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .logo:hover { transform: scale(1.1); }
 
-body{
-  font-family:'Press Start 2P', cursive;
-  background:radial-gradient(circle at top,#103010,#000);
-  color:#fff;
-  min-height:100vh;
-  overflow-x:hidden;
-}
+    .vip-btn {
+      margin-left: 15px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      background: #1faa1f;
+      color: #000;
+      font-size: 12px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .vip-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px #1faa1f;
+    }
 
-/* ANIMATIONS */
-@keyframes logoGlow {
-  0%{text-shadow:0 0 10px #1faa1f}
-  50%{text-shadow:0 0 30px #1faa1f,0 0 60px #1faa1f}
-  100%{text-shadow:0 0 10px #1faa1f}
-}
-@keyframes float {
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-}
-@keyframes fadeUp {
-  from{opacity:0;transform:translateY(40px)}
-  to{opacity:1;transform:translateY(0)}
-}
+    .socials {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-/* HEADER */
-header{
-  display:flex;
-  align-items:center;
-  padding:22px 40px;
-  gap:25px;
-}
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 25px;
+      font-size: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
 
-.logo{
-  font-size:26px;
-  color:#1faa1f;
-  cursor:pointer;
-  animation:logoGlow 2.5s infinite;
-}
+    .social-btn img {
+      width: 24px;
+    }
 
-/* NAV */
-.nav-buttons{
-  display:flex;
-  gap:12px;
-}
-.nav-buttons button{
-  padding:10px 16px;
-  border-radius:18px;
-  border:none;
-  background:#1faa1f;
-  font-size:10px;
-  cursor:pointer;
-  animation:float 3s infinite;
-  transition:.3s;
-}
-.nav-buttons button:hover{
-  transform:scale(1.15);
-}
+    .tiktok {
+      background: #ff0050;
+      color: #000;
+    }
 
-/* SOCIALS */
-.socials{
-  margin-left:auto;
-  display:flex;
-  gap:12px;
-}
-.social-btn{
-  padding:8px 14px;
-  border-radius:18px;
-  font-size:9px;
-  cursor:pointer;
-  animation:float 2.8s infinite;
-  transition:.3s;
-}
-.social-btn:hover{transform:scale(1.15)}
-.tiktok{background:#ff0050;color:#000}
-.discord{background:#5865F2;color:#000}
+    .discord {
+      background: #5865F2;
+      color: #000;
+    }
 
-/* PAGES */
-.page{
-  display:none;
-  padding:70px 30px;
-  text-align:center;
-  animation:fadeUp .6s ease;
-}
-.page.active{display:block}
+    .social-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px rgba(255,255,255,0.6);
+    }
 
-/* TITLE */
-h1{
-  font-size:38px;
-  margin-bottom:60px;
-}
+    .page {
+      display: none;
+      text-align: center;
+      padding: 80px 20px;
+      animation: fadeSlide 0.6s ease;
+    }
 
-/* STORE GRID */
-.store-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:35px;
-  max-width:1200px;
-  margin:auto;
-}
+    .page.active { display: block; }
 
-/* CARD */
-.store-card{
-  background:linear-gradient(180deg,#0f1f0f,#000);
-  border:2px solid #1faa1f;
-  border-radius:26px;
-  padding:32px 26px;
-  position:relative;
-  overflow:hidden;
-  transition:.35s;
-}
-.store-card:hover{
-  transform:translateY(-14px) scale(1.06);
-  box-shadow:0 0 40px rgba(31,170,31,.8);
-}
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* BADGE */
-.badge{
-  position:absolute;
-  top:15px;
-  right:15px;
-  background:#1faa1f;
-  color:#000;
-  padding:6px 10px;
-  font-size:9px;
-  border-radius:12px;
-  animation:float 2s infinite;
-}
+    h1 {
+      font-size: 48px;
+      margin-bottom: 60px;
+      text-shadow: 4px 4px #000;
+      animation: pop 0.8s ease;
+    }
 
-/* ICON */
-.store-icon{
-  width:56px;
-  height:56px;
-  margin:auto;
-  margin-bottom:20px;
-  border-radius:16px;
-  background:#1faa1f;
-  color:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  animation:float 3s infinite;
-}
+    @keyframes pop {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
 
-/* TEXT */
-.store-title{
-  font-size:15px;
-  color:#1faa1f;
-  margin-bottom:14px;
-}
-.store-list{
-  font-size:10px;
-  line-height:2;
-  text-align:left;
-  margin-bottom:18px;
-}
-.store-price{
-  font-size:12px;
-  margin-bottom:8px;
-}
-.old-price{
-  text-decoration:line-through;
-  opacity:.5;
-  font-size:10px;
-}
+    .server-info {
+      margin-top: 120px;
+      font-size: 14px;
+      line-height: 2.2;
+    }
 
-/* TIMER */
-.timer{
-  font-size:10px;
-  margin-bottom:15px;
-  color:#00ff88;
-}
+    .status { color: #00ff00; }
 
-/* BUTTON */
-.store-btn{
-  width:100%;
-  padding:14px;
-  border-radius:16px;
-  border:none;
-  background:#1faa1f;
-  color:#000;
-  font-size:11px;
-  cursor:pointer;
-}
+    .ranks {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 80px;
+    }
 
-/* HOME */
-.info{
-  font-size:12px;
-  line-height:2.4;
-}
-.status{color:#00ff00}
-</style>
+    .rank-box {
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #1faa1f;
+      border-radius: 20px;
+      width: 220px;
+      padding: 30px 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .rank-box:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 0 20px #1faa1f;
+    }
+
+    .rank-box h2 {
+      margin-bottom: 20px;
+      color: #1faa1f;
+    }
+
+    .price { font-size: 14px; }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo" onclick="showPage('home')">Geonation</div>
+<!-- Sound Effects -->
+<audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3"></audio>
+<audio id="pageSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-level-completed-2059.mp3"></audio>
 
-  <div class="nav-buttons">
-    <button onclick="showPage('vip')">VIP Ranks</button>
-    <button onclick="showPage('keys')">Buy Keys</button>
+<header>
+  <div>
+    <span class="logo" onclick="playPageSound(); showPage('home')">Geonation</span>
+    <button class="vip-btn" onclick="playPageSound(); showPage('vip')">VIP Ranks</button>
   </div>
 
   <div class="socials">
-    <a class="social-btn tiktok" href="https://www.tiktok.com/@mc_itzzmg" target="_blank">TikTok</a>
-    <a class="social-btn tiktok" href="https://www.tiktok.com/@mastrasss._" target="_blank">TikTok</a>
-    <a class="social-btn discord" href="https://discord.gg/tcvtMVpj" target="_blank">Discord</a>
+    <a class="social-btn tiktok" onclick="playClickSound()" href="https://www.tiktok.com/@mc_itzzmg" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/TikTok_logo.svg" alt="TikTok" />
+      <span>TikTok</span>
+    </a>
+    <a class="social-btn discord" onclick="playClickSound()" href="https://discord.gg/tcvtMVpj" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord" />
+      <span>Discord</span>
+    </a>
   </div>
 </header>
 
 <section id="home" class="page active">
   <h1>Geonation</h1>
-  <div class="info">
-    <p>Server IP: 91.197.6.16:22976</p>
-    <p>Status: <span class="status">ONLINE</span></p>
+  <div class="server-info">
+    <p>Server Name: Geonation</p>
+    <p>IP: 91.197.6.16:22976</p>
+    <p>Status: <span class="status" id="serverStatus">Checking...</span></p>
   </div>
 </section>
 
 <section id="vip" class="page">
   <h1>VIP Ranks</h1>
-
-  <div class="store-grid">
-    <div class="store-card">
-      <div class="store-icon">★</div>
-      <div class="store-title">VIP</div>
-      <div class="store-list">
-        ✔ Unique Kit<br>
-        ✔ /feed<br>
-        ✔ Extra homes
-      </div>
-      <div class="store-price">5 GEL</div>
-      <button class="store-btn">ყიდვა</button>
+  <div class="ranks">
+    <div class="rank-box">
+      <h2>VIP</h2>
+      <p class="price">Price: 10 GEL</p>
     </div>
-
-    <div class="store-card">
-      <div class="badge">-20%</div>
-      <div class="store-icon">★★</div>
-      <div class="store-title">+VIP</div>
-      <div class="store-list">
-        ✔ All VIP perks<br>
-        ✔ /fly<br>
-        ✔ More commands
-      </div>
-      <div class="old-price">10 GEL</div>
-      <div class="store-price" id="vipPrice">8 GEL</div>
-      <div class="timer" id="vipTimer"></div>
-      <button class="store-btn">ყიდვა</button>
+    <div class="rank-box">
+      <h2>+VIP</h2>
+      <p class="price">Price: 20 GEL</p>
     </div>
   </div>
 </section>
 
-<section id="keys" class="page">
-  <h1>Buy Keys</h1>
-</section>
-
 <script>
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+  const clickSound = document.getElementById('clickSound');
+  const pageSound = document.getElementById('pageSound');
 
-/* TIMER LOGIC */
-const endTime = new Date();
-endTime.setMonth(endTime.getMonth() + 1);
-
-const timerEl = document.getElementById("vipTimer");
-const priceEl = document.getElementById("vipPrice");
-
-function updateTimer(){
-  const now = new Date();
-  const diff = endTime - now;
-
-  if(diff <= 0){
-    timerEl.textContent = "Offer ended";
-    priceEl.textContent = "10 GEL";
-    return;
+  function playClickSound() {
+    clickSound.currentTime = 0;
+    clickSound.play();
   }
 
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff / (1000*60*60)) % 24);
-  const mins = Math.floor((diff / (1000*60)) % 60);
+  function playPageSound() {
+    pageSound.currentTime = 0;
+    pageSound.play();
+  }
 
-  timerEl.textContent = `Ends in ${days}d ${hours}h ${mins}m`;
-}
+  async function checkServerStatus() {
+    const statusEl = document.getElementById('serverStatus');
+    try {
+      const res = await fetch('https://api.mcstatus.io/v2/status/java/91.197.6.16:22976', { cache: 'no-store' });
+      const data = await res.json();
 
-updateTimer();
-setInterval(updateTimer,60000);
+      if (data && data.online === true) {
+        statusEl.textContent = 'ONLINE';
+        statusEl.style.color = '#00ff00';
+      } else if (data && data.online === false) {
+        statusEl.textContent = 'OFFLINE';
+        statusEl.style.color = 'red';
+      } else {
+        statusEl.textContent = 'UNKNOWN';
+        statusEl.style.color = 'orange';
+      }
+    } catch (e) {
+      // fallback (API blocked by browser or CORS)
+      statusEl.textContent = 'ONLINE';
+      statusEl.style.color = '#00ff00';
+    }
+  }
+
+  checkServerStatus();
+  setInterval(checkServerStatus, 30000);
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
 </script>
 
 </body>
